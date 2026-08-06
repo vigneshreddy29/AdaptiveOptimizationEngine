@@ -264,7 +264,12 @@ def load_timeseries_data():
     Returns:
         pd.DataFrame with all enrichments, or None if file not found
     """
-    import scipy.stats as stats
+    try:
+        import scipy.stats as stats
+        has_scipy = True
+    except ImportError:
+        has_scipy = False
+
 
     filepath = os.path.join(config.DATA_RAW_DIR, "_h_batch_process_data.xlsx")
 
@@ -346,7 +351,11 @@ def load_timeseries_data():
         phase_data = df.loc[mask, "Energy_kW"]
 
         if len(phase_data) > 2:
-            z = np.abs(stats.zscore(phase_data))
+            if has_scipy:
+                z = np.abs(stats.zscore(phase_data))
+            else:
+                std = phase_data.std(ddof=0)
+                z = np.abs((phase_data - phase_data.mean()) / (std if std != 0 else 1.0))
             df.loc[mask, "Z_Score"]    = z
             df.loc[mask, "Is_Anomaly"] = z > 2.0
 
