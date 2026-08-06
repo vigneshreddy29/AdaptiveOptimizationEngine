@@ -51,7 +51,7 @@ def get_cached_data():
     """Run pipeline and optimization once at startup. Cache result."""
     from src.optimization_engine import run_optimization, normalize_scores, identify_pareto_front
     df = run_pipeline()
-    results, full_df = run_optimization()
+    results, full_df = run_optimization(df)
     full_df = normalize_scores(full_df)
     full_df, pareto_df = identify_pareto_front(full_df)
     return df, results, full_df, pareto_df

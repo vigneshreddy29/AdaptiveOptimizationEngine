@@ -191,15 +191,18 @@ def save_processed_data(df):
     """Save the final processed dataset to data/processed/"""
     print("[5/5] Saving processed dataset...")
 
-    os.makedirs(config.DATA_PROCESSED_DIR, exist_ok=True)
-
     # --- Engineered features (P5 fix) ---
     from src.feature_engineering import build_engineered_features
     df = build_engineered_features(df)
     print(f"[Pipeline] Engineered features added. Final shape: {df.shape}")
 
-    df.to_csv(config.PROCESSED_DATA_FILE, index=False)
-    print(f"      Saved to : {config.PROCESSED_DATA_FILE}")
+    try:
+        os.makedirs(config.DATA_PROCESSED_DIR, exist_ok=True)
+        df.to_csv(config.PROCESSED_DATA_FILE, index=False)
+        print(f"      Saved to : {config.PROCESSED_DATA_FILE}")
+    except (OSError, PermissionError) as e:
+        print(f"      [Notice] Skipped saving file due to read-only cloud filesystem")
+
     print(f"      Shape    : {df.shape[0]} rows × {df.shape[1]} columns")
 
     return df

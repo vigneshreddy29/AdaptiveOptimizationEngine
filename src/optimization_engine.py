@@ -135,7 +135,7 @@ def identify_pareto_front(df):
     return df, pareto_df
 
 
-def run_optimization():
+def run_optimization(df=None):
     """
     Run the full multi-objective optimization across all scenarios.
 
@@ -147,7 +147,8 @@ def run_optimization():
     print("  MULTI-OBJECTIVE OPTIMIZATION ENGINE")
     print("=" * 60)
 
-    df = load_processed_data()
+    if df is None:
+        df = load_processed_data()
     df = normalize_scores(df)
 
     # Identify Pareto front

@@ -53,8 +53,11 @@ def initialize_golden_signatures(optimization_results):
 
 def save_golden_signatures(gs_store):
     """Persist Golden Signature store to disk as JSON."""
-    with open(config.GOLDEN_SIGNATURE_FILE, "w") as f:
-        json.dump(gs_store, f, indent=2)
+    try:
+        with open(config.GOLDEN_SIGNATURE_FILE, "w") as f:
+            json.dump(gs_store, f, indent=2)
+    except (OSError, PermissionError):
+        pass
 
 
 def load_golden_signatures():
@@ -283,8 +286,11 @@ def log_hitl_decision(batch_id, scenario_key, decision,
     }
     log.append(entry)
 
-    with open(config.HITL_LOG_FILE, "w") as f:
-        json.dump(log, f, indent=2)
+    try:
+        with open(config.HITL_LOG_FILE, "w") as f:
+            json.dump(log, f, indent=2)
+    except (OSError, PermissionError):
+        pass
 
     return entry
 
