@@ -15,10 +15,17 @@ from datetime import datetime
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import config
-try:
-    from config_secrets import GROQ_API_KEY
-except:
-    GROQ_API_KEY = None
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+if not GROQ_API_KEY:
+    try:
+        from config_secrets import GROQ_API_KEY
+    except Exception:
+        try:
+            import streamlit as st
+            GROQ_API_KEY = st.secrets.get("GROQ_API_KEY")
+        except Exception:
+            GROQ_API_KEY = None
+
 from src.data_pipeline import run_pipeline, load_timeseries_data
 from src.optimization_engine import run_optimization, normalize_scores, identify_pareto_front
 from src.golden_signature import (
