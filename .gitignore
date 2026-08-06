@@ -40,3 +40,4 @@ Thumbs.db
 # Project specific
 .env
 local_config.py
+config_secrets.py

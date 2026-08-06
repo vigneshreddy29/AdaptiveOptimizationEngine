@@ -18,7 +18,6 @@ from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
 from xgboost import XGBRegressor
 import pickle
 
-
 # =============================================================================
 # FEATURE ENGINEERING
 # =============================================================================
