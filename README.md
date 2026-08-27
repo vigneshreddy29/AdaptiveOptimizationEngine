@@ -18,6 +18,19 @@
   <i>Synthesizing artificial intelligence, physical thermodynamics, and human intuition to drive zero-waste manufacturing.</i>
 </p>
 
+<p align="center">
+  <a href="https://adaptiveoptimizationengine-yw5jhs69m8ajrfwn53dzaw.streamlit.app/">
+    <img src="https://img.shields.io/badge/🚀_LIVE_DASHBOARD-Open_App-FF4B4B?style=for-the-badge&logoColor=white" alt="Live Dashboard" />
+  </a>
+  <a href="https://adaptive-optimization-engine-s81t.vercel.app/docs">
+    <img src="https://img.shields.io/badge/⚡_LIVE_API-Swagger_Docs-009688?style=for-the-badge&logoColor=white" alt="Live API" />
+  </a>
+</p>
+
+<p align="center">
+  <sub><i>Dashboard is hosted on Streamlit Community Cloud and sleeps after inactivity — first load may take ~60s to wake.</i></sub>
+</p>
+
 ---
 </div>
 
@@ -78,7 +91,7 @@ graph TD
 
     subgraph Interface["💻 Interactive User interfaces"]
         STREAMLIT["🖥️ Streamlit HITL Dashboard<br/>(8 Complete Operational Pages)"]
-        FASTAPI["🚀 FastAPI REST Backend<br/>(10 Production API Endpoints)"]
+        FASTAPI["🚀 FastAPI REST Backend<br/>(11 Production API Endpoints)"]
     end
 
     RAW_EXCEL --> DP
@@ -121,9 +134,15 @@ venv\Scripts\activate
 # on Linux / macOS:
 source venv/bin/activate
 
-# Install high-performance package dependencies
-pip install -r requirements.txt
+# Install full local dependency set (dashboard + API + model training)
+pip install -r requirements-dev.txt
 ```
+
+> **📦 On the three requirements files:** dependencies are split per deployment target so each
+> platform installs only what it needs.
+> - `requirements-dev.txt` — full local stack. **Use this one for local development.**
+> - `requirements.txt` — slim API manifest read by Vercel's serverless builder (~130 MB).
+> - `dashboard/requirements.txt` — Streamlit Cloud manifest, resolved next to `dashboard/app.py`.
 
 ### 2️⃣ Operational Entry Points
 You can boot the system via three dedicated execution pipelines:
@@ -274,7 +293,11 @@ Carbon Target (kg)   = Fleet_Average_Carbon * (1 - (0.10 * (1 + (Pressure - 0.5)
 The headless backend exposes an OpenAPI-compliant REST surface designed for direct integration with **AVEVA PI Data Archive**, **MES Enterprise systems**, and industrial SCADA controllers:
 
 ```bash
-# Example: Request live parameter optimizations via HTTP POST
+# Live production API — returns all 3 optimization scenarios (try it now)
+curl -X 'GET' 'https://adaptive-optimization-engine-s81t.vercel.app/optimize/all' \
+  -H 'accept: application/json'
+
+# Local equivalent, once the server is running
 curl -X 'POST' 'http://localhost:8000/optimize?scenario=balanced' \
   -H 'accept: application/json' -d ''
 ```
@@ -290,6 +313,7 @@ curl -X 'POST' 'http://localhost:8000/optimize?scenario=balanced' \
 | `GET` | `/hitl-history` | Fetch complete timestamped operational audit history for GMP compliance auditing. |
 | `POST` | `/recommend` | Calculate parameter Delta recommendations based on real-time sensor array payload. |
 | `GET` | `/adaptive-targets`| Return active energy and Scope 2 emission ceiling targets under prevailing pressure. |
+| `GET` | `/history` | Full batch ledger — all 60 processed batches with quality, yield, performance, energy, and carbon scores. |
 
 ---
 
@@ -297,6 +321,7 @@ curl -X 'POST' 'http://localhost:8000/optimize?scenario=balanced' \
 
 - **AVEVA Native Integration:** Designed to plug directly into AVEVA PI Asset Frameworks. The REST endpoints natively accept streaming time-series buffers from rotary tableters and fluid bed granulators.
 - **Zero-Database Dependency Edge Architecture:** By persisting versioned state across ultra-fast atomic JSON serialization structures (`golden_signatures.json`, `hitl_decisions.json`) and compressed serialized XGBoost memory weights (`.pkl`), the entire system can deploy on air-gapped **Industrial Edge Computers** without external database overhead.
+  *Note: on the hosted serverless demo the audit ledger is effectively read-only and resets on each deployment — persistent writes require an edge or containerized target.*
 - **Single-Source of Truth Setup (`config.py`):** Every thermodynamic calibration scalar, electrical grid carbon emission factor ($0.000233 \text{ kg CO}_2/\text{Wh}$ for India Grid), and update threshold is decoupled in a single declarative python module. Adapting the system from pharmaceutical tablets to chemical reactors, food manufacturing, or energy grid load optimization requires updating *zero lines of core engine code*.
 
 ---
