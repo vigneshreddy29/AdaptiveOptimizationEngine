@@ -22,7 +22,7 @@
   <a href="https://adaptiveoptimizationengine-yw5jhs69m8ajrfwn53dzaw.streamlit.app/">
     <img src="https://img.shields.io/badge/🚀_LIVE_DASHBOARD-Open_App-FF4B4B?style=for-the-badge&logoColor=white" alt="Live Dashboard" />
   </a>
-  <a href="https://adaptive-optimization-engine-s81t.vercel.app/docs">
+  <a href="https://adaptive-optimization-engine.vercel.app/docs">
     <img src="https://img.shields.io/badge/⚡_LIVE_API-Swagger_Docs-009688?style=for-the-badge&logoColor=white" alt="Live API" />
   </a>
 </p>
@@ -294,7 +294,7 @@ The headless backend exposes an OpenAPI-compliant REST surface designed for dire
 
 ```bash
 # Live production API — returns all 3 optimization scenarios (try it now)
-curl -X 'GET' 'https://adaptive-optimization-engine-s81t.vercel.app/optimize/all' \
+curl -X 'GET' 'https://adaptive-optimization-engine.vercel.app/optimize/all' \
   -H 'accept: application/json'
 
 # Local equivalent, once the server is running
