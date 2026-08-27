@@ -197,15 +197,15 @@ To enable accurate AI modeling of complex thermodynamics and mechanical stresses
 
 $$\text{Efficiency Ratio} = \frac{\text{Quality Score} \times \text{Yield Score}}{\text{Est. Total Energy (kWh)}}$$
 
-| Feature Name | Algebraic Mathematical Formulation | Physical Domain Purpose |
+| Feature Name | Formulation | Physical Domain Purpose |
 | :--- | :--- | :--- |
-| `Energy_per_Quality` | $\frac{\text{Energy}}{\text{Quality\_Score}}$ | Specific energy cost per percentage point of dissolution quality. |
-| `Efficiency_Ratio` | $\frac{\text{Quality} \times \text{Yield}}{\text{Energy}}$ | Overall throughput capability per unit kWh consumed. |
-| `Carbon_per_Quality` | $\frac{\text{Carbon (kg)}}{\text{Quality\_Score}}$ | Environmental footprint per unit of finished efficacy. |
-| `Drying_Intensity` | $\text{Drying\_Temp} \times \text{Drying\_Time}$ | Thermodynamic thermal exposure index during fluidization. |
-| `Compression_Intensity`| $\text{Compression\_Force} \times \text{Machine\_Speed}$ | Total mechanical strain exerted during rotary tableting. |
-| `Moisture_Deviation` | $|\text{Moisture} - 2.0|$ | Absolute Euclidean distance from theoretical ideal moisture content. |
-| `Granulation_Efficiency`| $\frac{\text{Binder\_Amount}}{\text{Granulation\_Time}}$ | Chemical binding assimilation velocity during wet granulation. |
+| `Energy_per_Quality` | `Energy / Quality_Score` | Specific energy cost per percentage point of dissolution quality. |
+| `Efficiency_Ratio` | `(Quality × Yield) / Energy` | Overall throughput capability per unit kWh consumed. |
+| `Carbon_per_Quality` | `Carbon_kg / Quality_Score` | Environmental footprint per unit of finished efficacy. |
+| `Drying_Intensity` | `Drying_Temp × Drying_Time` | Thermodynamic thermal exposure index during fluidization. |
+| `Compression_Intensity`| `Compression_Force × Machine_Speed` | Total mechanical strain exerted during rotary tableting. |
+| `Moisture_Deviation` | `abs(Moisture_Content − 2.0)` | Absolute distance from theoretical ideal moisture content. |
+| `Granulation_Efficiency`| `Binder_Amount / Granulation_Time` | Chemical binding assimilation velocity during wet granulation. |
 
 ---
 
